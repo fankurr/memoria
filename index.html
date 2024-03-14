@@ -7,23 +7,11 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@jeromeetienne/ar.js"></script>
 </head>
-<body style="margin: 0; overflow: hidden;">
-    <a-scene embedded arjs="sourceType: webcam;"
-            vr-mode-ui="enabled: false;"
-            loading-screen="enabled: true;"
-            arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-            id="scene"
-            embedded
-            gesture-detector> 
-        <a-marker preset="hiro" url="assets/marker/marker.png">
-            <a-entity slideshow></a-entity>
-        </a-marker>
-        
-        <a-image>
-        <script>
+<body>
+    <script>
         AFRAME.registerComponent('slideshow', {
             init: function () {
-                var images = ['assets/image/tesla01.jpeg', 'assets/image/tesla02.jpeg', 'assets/image/tesla03.jpeg']; // Daftar foto-foto yang akan ditampilkan
+                var images = ['assets/image/tesla01.jpeg', 'assets/image/tesla01.jpeg', 'assets/image/tesla01.jpeg]; // Daftar foto-foto yang akan ditampilkan
                 var currentIndex = 0;
                 var entity = this.el;
                 entity.addEventListener('markerFound', function() {
@@ -34,9 +22,12 @@
                 });
             }
         });
-        </script>
-        </a-image>
-        
+    </script>
+
+    <a-scene embedded arjs="sourceType: webcam;">
+        <a-marker preset="hiro" url="assets/marker/marker.png">
+            <a-entity slideshow></a-entity>
+        </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
 </body>
