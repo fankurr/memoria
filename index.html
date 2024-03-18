@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-<!--   <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AR.js Carousel</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
@@ -76,23 +76,22 @@
           </div>
       </a-marker>
       <a-entity camera></a-entity>
-  </a-scene>
-
   <script>
-      document.addEventListener('markerFound', function () {
-          var images = ['assets/image/tesla01.jpeg', 'assets/image/tesla02.jpeg', 'assets/image/tesla03.jpeg']; // Daftar foto-foto yang akan ditampilkan
-          var currentIndex = 0;
-          var imageElement1 = document.getElementById('imageSlide1');
-          var imageElement2 = document.getElementById('imageSlide2');
-          var imageElement3 = document.getElementById('imageSlide3');
+    document.addEventListener('markerFound', function () {
+        var images = ['assets/image/tesla01.jpeg', 'assets/image/tesla02.jpeg', 'assets/image/tesla03.jpeg']; // Daftar foto-foto yang akan ditampilkan
+        var currentIndex = 0;
+        var imageElement1 = document.getElementById('imageSlide1');
+        var imageElement2 = document.getElementById('imageSlide2');
+        var imageElement3 = document.getElementById('imageSlide3');
 
-          setInterval(function () {
-              imageElement1.setAttribute('src', images[currentIndex]);
-              imageElement2.setAttribute('src', images[(currentIndex + 1) % images.length]);
-              imageElement3.setAttribute('src', images[(currentIndex + 2) % images.length]);
-              currentIndex = (currentIndex + 1) % images.length;
-          }, 3000); // Ganti gambar setiap 3 detik
-      });
+        setInterval(function () {
+            imageElement1.setAttribute('src', images[currentIndex]);
+            imageElement2.setAttribute('src', images[(currentIndex + 1) % images.length]);
+            imageElement3.setAttribute('src', images[(currentIndex + 2) % images.length]);
+            currentIndex = (currentIndex + 1) % images.length;
+        }, 3000); // Ganti gambar setiap 3 detik
+    });
   </script>
+  </a-scene>
 </body>
 </html>
