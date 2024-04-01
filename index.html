@@ -33,15 +33,15 @@
   }
 </style>
 
-<body style="margin: 3; overflow: hidden;">
+<body style="margin: 0; overflow: hidden;">
     <!-- minimal loader shown until image descriptors are loaded. Loading may take a while according to the device computational power -->
-  <div class="arjs-loader">
+<!--   <div class="arjs-loader">
     <div>Loading, please wait...</div>
-  </div>
+  </div> -->
     <a-scene
         vr-mode-ui="enabled: false;"
       renderer="logarithmicDepthBuffer: true;"
-        
+        loading-screen="enabled: true;"
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
         id="scene"
         embedded
