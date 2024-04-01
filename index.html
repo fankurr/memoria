@@ -32,6 +32,11 @@
       border-radius: 10px;
       display: none;
     }
+
+    .image-slide {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
     
 </style>
 
@@ -86,10 +91,14 @@
             var imageElement = document.getElementById('imageSlide');
 
             setInterval(function () {
+              imageElement.style.opacity = 0;
+              setTimeout(function() {
                 imageElement.setAttribute('src', images[currentIndex]);
                 currentIndex = (currentIndex + 1) % images.length;
+                imageElement.style.opacity = 1;
+              }, 500); // Waktu transisi 0.5 detik
             }, 3000); // Ganti gambar setiap 3 detik
-        });
+          });
           
           document.addEventListener('markerLost', function () {
           loadingMessage.style.display = 'none';
