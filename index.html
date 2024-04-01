@@ -18,16 +18,23 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(255, 255, 255, 0.8);
       padding: 5px;
       border-radius: 10px;
       display: none;
+    }
+    .loading-message div {
+      text-align: center;
+    font-size: 1.25em;
+    color: white;
     }
 </style>
 
 <body style="margin: 0; overflow: hidden;">
     <!-- minimal loader shown until image descriptors are loaded. Loading may take a while according to the device computational power -->
-<div id="loadingMessage" class="loading-message">Loading, please wait...</div>
+<div id="loadingMessage" class="loading-message">
+  <div>Loading, please wait...</div>
+</div>
     <a-scene
         vr-mode-ui="enabled: false;"
       renderer="logarithmicDepthBuffer: true;"
