@@ -13,31 +13,21 @@
 </head>
 
   <style>
-  .arjs-loader {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .arjs-loader div {
-    text-align: center;
-    font-size: 1.25em;
-    color: white;
-  }
+.loading-message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+    }
 </style>
 
 <body style="margin: 0; overflow: hidden;">
     <!-- minimal loader shown until image descriptors are loaded. Loading may take a while according to the device computational power -->
-<!--   <div class="arjs-loader">
-    <div>Loading, please wait...</div>
-  </div> -->
+<div id="loadingMessage" class="loading-message">Loading, please wait...</div>
     <a-scene
         vr-mode-ui="enabled: false;"
       renderer="logarithmicDepthBuffer: true;"
@@ -45,8 +35,9 @@
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
         id="scene"
         embedded
-
+        
     >
+<!--       gesture-detector -->
         <a-marker
             id="animated-marker"
             type="pattern"
@@ -69,7 +60,10 @@
 
         <a-entity camera></a-entity>
         <script>
+          document.getElementById('loadingMessage').style.display = 'block';
+          
         document.addEventListener('markerFound', function () {
+          document.getElementById('loadingMessage').style.display = 'none';
             var images = ['assets/image/tesla01.jpeg', 'assets/image/tesla02.jpeg', 'assets/image/tesla03.jpeg']; // Daftar foto-foto yang akan ditampilkan
             var currentIndex = 0;
             var imageElement = document.getElementById('imageSlide');
