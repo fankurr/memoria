@@ -23,13 +23,25 @@
       border-radius: 10px;
       display: none;
     }
-    
+
+        .not-detected-message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 0, 0, 0.8);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+    }
     
 </style>
 
 <body style="margin: 0; overflow: hidden;">
     <!-- minimal loader shown until image descriptors are loaded. Loading may take a while according to the device computational power -->
 <div id="loadingMessage" class="loading-message">Loading, please wait...</div>
+  <div id="notDetectedMessage" class="not-detected-message">Marker Not Detected!</div>
 
     <a-scene
         vr-mode-ui="enabled: false;"
@@ -63,10 +75,15 @@
 
         <a-entity camera></a-entity>
         <script>
-          document.getElementById('loadingMessage').style.display = 'block';
+          var loadingMessage = document.getElementById('loadingMessage');
+      var notDetectedMessage = document.getElementById('notDetectedMessage');
+          loadingMessage.style.display = 'block';
+      notDetectedMessage.style.display = 'none';
           
         document.addEventListener('markerFound', function () {
           document.getElementById('loadingMessage').style.display = 'none';
+          notDetectedMessage.style.display = 'none';
+          
             var images = ['assets/image/tesla01.jpeg', 'assets/image/tesla02.jpeg', 'assets/image/tesla03.jpeg']; // Daftar foto-foto yang akan ditampilkan
             var currentIndex = 0;
             var imageElement = document.getElementById('imageSlide');
@@ -76,6 +93,11 @@
                 currentIndex = (currentIndex + 1) % images.length;
             }, 3000); // Ganti gambar setiap 3 detik
         });
+          
+          document.addEventListener('markerLost', function () {
+          loadingMessage.style.display = 'none';
+          notDetectedMessage.style.display = 'block';
+      });
     </script>
     </a-scene>
 </body>
