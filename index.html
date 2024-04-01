@@ -58,7 +58,6 @@
     >
       <a-image
         id="imageSlide"
-        
         scale="1.5 1.5 1.5"
         class="clickable"
         rotation="-90 0 0"
@@ -86,7 +85,7 @@
           imageElement.setAttribute('animation', {
             property: 'material.opacity',
             to: 0,
-            dur: 1000
+            dur: 500
           });
 
           setTimeout(function () {
@@ -95,7 +94,7 @@
             imageElement.setAttribute('animation', {
               property: 'material.opacity',
               to: 1,
-              dur: 1000
+              dur: 500
             });
           }, 500); // Transisi 0,5 detik
         }, 3000); // Ganti gambar setiap 3 detik
