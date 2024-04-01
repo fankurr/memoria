@@ -3,106 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" >
-    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
 </head>
 
 <style>
-.loading-message {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 5px;
-      border-radius: 10px;
-      display: none;
-    }
+  .loading-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 10px;
+    display: none;
+  }
 
-.not-detected-message {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(255, 0, 0, 0.8);
-      color: white;
-      padding: 5px;
-      border-radius: 10px;
-      display: none;
-    }
-
-.image-slide {
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
+  .not-detected-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    display: none;
+  }
 </style>
 
 <body style="margin: 0; overflow: hidden;">
-    <!-- minimal loader shown until image descriptors are loaded. Loading may take a while according to the device computational power -->
-<div id="loadingMessage" class="loading-message">Loading, please wait...</div>
+  <div id="loadingMessage" class="loading-message">Loading, please wait...</div>
   <div id="notDetectedMessage" class="not-detected-message">Marker Not Detected!</div>
 
-    <a-scene
-        vr-mode-ui="enabled: false;"
-      renderer="logarithmicDepthBuffer: true;"
-        loading-screen="enabled: true;"
-        arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-        id="scene"
-        embedded
-        
+  <a-scene
+    vr-mode-ui="enabled: false;"
+    renderer="logarithmicDepthBuffer: true;"
+    loading-screen="enabled: true;"
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    id="scene"
+    embedded
+  >
+    <a-marker
+      id="animated-marker"
+      type="pattern"
+      preset="custom"
+      url="assets/marker/marker.patt"
+      raycaster="objects: .clickable"
+      emitevents="true"
+      cursor="fuse: false; rayOrigin: mouse;"
+      id="markerA"
     >
-        <a-marker
-            id="animated-marker"
-            type="pattern"
-            preset="custom"
-            url="assets/marker/marker.patt"
-            raycaster="objects: .clickable"
-            emitevents="true"
-            cursor="fuse: false; rayOrigin: mouse;"
-            id="markerA"
-        >
-            <a-image
-                id="imageSlide"
-                class="clickable image-slide"
-                src="assets/image/tesla01.jpeg" 
-                scale="1.5 1.5 1.5"
-                rotation="-90 0 0"
-                gesture-handler
-            ></a-image>
-        </a-marker>
+      <a-image
+        id="imageSlide"
+        src="assets/image/tesla01.jpeg" 
+        scale="1.5 1.5 1.5"
+        class="clickable"
+        rotation="-90 0 0"
+        gesture-handler
+      ></a-image>
+    </a-marker>
 
-        <a-entity camera></a-entity>
-        <script>
-          var loadingMessage = document.getElementById('loadingMessage');
-          var notDetectedMessage = document.getElementById('notDetectedMessage');
-          loadingMessage.style.display = 'block';
-          notDetectedMessage.style.display = 'none';
-          
-          document.addEventListener('markerFound', function () {
-            document.getElementById('loadingMessage').style.display = 'none';
-            notDetectedMessage.style.display = 'none';
-            
-            var images = ['assets/image/tesla01.jpeg', 'assets/image/tesla02.jpeg', 'assets/image/tesla03.jpeg']; // Daftar foto-foto yang akan ditampilkan
-            var currentIndex = 0;
-            var imageElement = document.getElementById('imageSlide');
+    <a-entity camera></a-entity>
 
-            setInterval(function () {
-              imageElement.style.opacity = 0;
-              setTimeout(function() {
-                imageElement.setAttribute('src', images[currentIndex]);
-                currentIndex = (currentIndex + 1) % images.length;
-                imageElement.style.opacity = 1;
-              }, 1000); // Waktu transisi 0.5 detik
-            }, 3000); // Ganti gambar setiap 3 detik
+    <script>
+      var loadingMessage = document.getElementById('loadingMessage');
+      var notDetectedMessage = document.getElementById('notDetectedMessage');
+      loadingMessage.style.display = 'block';
+      notDetectedMessage.style.display = 'none';
+
+      document.addEventListener('markerFound', function () {
+        loadingMessage.style.display = 'none';
+        notDetectedMessage.style.display = 'none';
+
+        var images = ['assets/image/tesla01.jpeg', 'assets/image/tesla02.jpeg', 'assets/image/tesla03.jpeg'];
+        var currentIndex = 0;
+        var imageElement = document.getElementById('imageSlide');
+
+        setInterval(function () {
+          imageElement.setAttribute('animation', {
+            property: 'material.opacity',
+            to: 0,
+            dur: 1000
           });
-          
-          document.addEventListener('markerLost', function () {
-            loadingMessage.style.display = 'none';
-            notDetectedMessage.style.display = 'block';
-          });
-        </script>
-    </a-scene>
+
+          setTimeout(function () {
+            imageElement.setAttribute('src', images[currentIndex]);
+            currentIndex = (currentIndex + 1) % images.length;
+            imageElement.setAttribute('animation', {
+              property: 'material.opacity',
+              to: 1,
+              dur: 1000
+            });
+          }, 1000); // Transisi 1 detik
+        }, 3000); // Ganti gambar setiap 3 detik
+      });
+
+      document.addEventListener('markerLost', function () {
+        loadingMessage.style.display = 'none';
+        notDetectedMessage.style.display = 'block';
+      });
+    </script>
+  </a-scene>
 </body>
 </html>
