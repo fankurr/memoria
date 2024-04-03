@@ -32,6 +32,22 @@
     border-radius: 10px;
     display: none;
   }
+
+  .carousel-buttons {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+  }
+
+  .carousel-buttons button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
 </style>
 
 <body style="margin: 0; overflow: hidden;">
@@ -67,6 +83,7 @@
     </a-marker>
 
     <a-entity camera></a-entity>
+
     <div class="carousel-buttons">
       <button onclick="prevImage()">Previous</button>
       <button onclick="nextImage()">Next</button>
