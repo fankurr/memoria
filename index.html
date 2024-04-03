@@ -67,6 +67,10 @@
     </a-marker>
 
     <a-entity camera></a-entity>
+    <div class="carousel-buttons">
+      <button onclick="prevImage()">Previous</button>
+      <button onclick="nextImage()">Next</button>
+    </div>
 
     <script>
       var loadingMessage = document.getElementById('loadingMessage');
@@ -74,42 +78,40 @@
       loadingMessage.style.display = 'block';
       notDetectedMessage.style.display = 'none';
 
+      var images = ['assets/image/tesla01.jpeg', 'assets/image/tesla02.jpeg', 'assets/image/tesla03.jpeg'];
+      var currentIndex = 0;
+      var imageElement = document.getElementById('imageSlide');
+
+      function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateImage();
+      }
+
+      function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateImage();
+      }
+
+      function updateImage() {
+        imageElement.setAttribute('src', images[currentIndex]);
+      }
+
       document.addEventListener('markerFound', function () {
         loadingMessage.style.display = 'none';
         notDetectedMessage.style.display = 'none';
 
-        var images = ['assets/image/tesla01.jpeg', 'assets/image/tesla02.jpeg', 'assets/image/tesla03.jpeg'];
-        var currentIndex = 0;
-        var imageElement = document.getElementById('imageSlide');
+        updateImage();
 
-        // // Animasi foto pertama kali muncul
-        // imageElement.setAttribute('material', 'opacity', 0); // Set opasitas menjadi 0 agar tidak terlihat
-        // setTimeout(function() { // Atur timeout untuk memulai animasi setelah beberapa saat
-        //   imageElement.setAttribute('animation', { // Atur atribut animasi untuk memudarkan gambar
-        //     property: 'material.opacity',
-        //     from: 0,
-        //     to: 1,
-        //     dur: 1000 // Durasi animasi dalam milidetik
-        //   });
-        // }, 500); // Delay 500ms sebelum memulai animasi memudar
-
-        setInterval(function () {
-          imageElement.setAttribute('animation', {
+        // Animasi foto pertama kali muncul
+        imageElement.setAttribute('material', 'opacity', 0); // Set opasitas menjadi 0 agar tidak terlihat
+        setTimeout(function() { // Atur timeout untuk memulai animasi setelah beberapa saat
+          imageElement.setAttribute('animation', { // Atur atribut animasi untuk memudarkan gambar
             property: 'material.opacity',
-            to: 0,
-            dur: 1000
+            from: 0,
+            to: 1,
+            dur: 1000 // Durasi animasi dalam milidetik
           });
-
-          setTimeout(function () {
-            imageElement.setAttribute('src', images[currentIndex]);
-            currentIndex = (currentIndex + 1) % images.length;
-            imageElement.setAttribute('animation', {
-              property: 'material.opacity',
-              to: 1,
-              dur: 1000
-            });
-          }, 1000); // Transisi 1 detik
-        }, 3000); // Ganti gambar setiap 3 detik
+        }, 500); // Delay 500ms sebelum memulai animasi memudar
       });
 
       document.addEventListener('markerLost', function () {
