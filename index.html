@@ -85,8 +85,8 @@
     <a-entity camera></a-entity>
 
     <div class="carousel-buttons">
-      <button onclick="prevImage()">Previous</button>
-      <button onclick="nextImage()">Next</button>
+      <button onclick="prevSlide()">Previous</button>
+      <button onclick="nextSlide()">Next</button>
     </div>
 
     <script>
@@ -99,17 +99,17 @@
       var currentIndex = 0;
       var imageElement = document.getElementById('imageSlide');
 
-      function prevImage() {
+      function prevSlide() {
         currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateImage();
+        updateSlide();
       }
 
-      function nextImage() {
+      function nextSlide() {
         currentIndex = (currentIndex + 1) % images.length;
-        updateImage();
+        updateSlide();
       }
 
-      function updateImage() {
+      function updateSlide() {
         imageElement.setAttribute('src', images[currentIndex]);
       }
 
@@ -117,7 +117,7 @@
         loadingMessage.style.display = 'none';
         notDetectedMessage.style.display = 'none';
 
-        updateImage();
+        updateSlide();
 
         setInterval(function () {
           imageElement.setAttribute('animation', {
