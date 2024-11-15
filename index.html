@@ -22,17 +22,43 @@
     <a-scene
         embedded
         loading-screen="enabled: false;"
-        arjs="sourceType: webcam; debugUIEnabled: false; maxDistance: 10;"  
+        arjs="sourceType: webcam; debugUIEnabled: false; maxDistance: 1000;"
     >
         <a-image
+            id="dynamic-object"
             src="assets/asset.jpeg"
             look-at="[gps-camera]"
-            scale="10 10 10" 
+            scale="10 10 10"
             position="0 10 0"
             gps-entity-place="latitude: -6.204202; longitude: 106.820680;"
         ></a-image>
 
-        <a-camera gps-camera rotation-reader></a-camera>
+        <a-camera gps-camera rotation-reader id="camera"></a-camera>
     </a-scene>
+
+    <script>
+        // Script to adjust the scale of the object based on distance
+        AFRAME.registerComponent('scale-with-distance', {
+            schema: {
+                camera: { type: 'selector' }
+            },
+            tick: function () {
+                const object3D = this.el.object3D;
+                const camera = this.data.camera.object3D;
+
+                // Calculate distance between the object and the camera
+                const distance = object3D.position.distanceTo(camera.position);
+
+                // Update scale based on distance (example formula: scale inversely proportional to distance)
+                const scaleFactor = Math.max(10 / (distance || 1), 1); // Prevent division by zero
+                this.el.setAttribute('scale', `${scaleFactor} ${scaleFactor} ${scaleFactor}`);
+            }
+        });
+
+        // Apply the component to the dynamic object
+        document.querySelector('#dynamic-object').setAttribute('scale-with-distance', {
+            camera: '#camera'
+        });
+    </script>
 </body>
 </html>
