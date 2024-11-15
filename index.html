@@ -28,36 +28,38 @@
             id="dynamic-object"
             src="assets/asset.jpeg"
             look-at="[gps-camera]"
-            scale="100 100 100"
+            scale="10 10 10"
             position="0 10 0"
-            gps-entity-place="latitude: -6.204362; longitude: 106.822421;"
+            gps-entity-place="latitude: -6.204202; longitude: 106.820680;"
         ></a-image>
 
         <a-camera gps-camera rotation-reader id="camera"></a-camera>
     </a-scene>
 
     <script>
-        // Script to adjust the scale of the object based on distance
+        // Component to adjust scale based on distance with a base scale of 10
         AFRAME.registerComponent('scale-with-distance', {
             schema: {
-                camera: { type: 'selector' }
+                camera: { type: 'selector' },
+                baseScale: { type: 'number', default: 10 }
             },
             tick: function () {
                 const object3D = this.el.object3D;
                 const camera = this.data.camera.object3D;
 
-                // Calculate distance between the object and the camera
+                // Calculate distance between object and camera
                 const distance = object3D.position.distanceTo(camera.position);
 
-                // Update scale based on distance (example formula: scale inversely proportional to distance)
-                const scaleFactor = Math.max(10 / (distance || 1), 1); // Prevent division by zero
+                // Scale calculation: base scale (10) inversely proportional to distance
+                const scaleFactor = Math.max(this.data.baseScale / (distance || 1), 1);
                 this.el.setAttribute('scale', `${scaleFactor} ${scaleFactor} ${scaleFactor}`);
             }
         });
 
-        // Apply the component to the dynamic object
+        // Apply the component to the dynamic object with base scale of 10
         document.querySelector('#dynamic-object').setAttribute('scale-with-distance', {
-            camera: '#camera'
+            camera: '#camera',
+            baseScale: 10
         });
     </script>
 </body>
