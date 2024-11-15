@@ -28,7 +28,7 @@
             id="dynamic-object"
             src="assets/asset.jpeg"
             look-at="[gps-camera]"
-            scale="10 10 10"
+            scale="100 100 100"
             position="0 10 0"
             gps-entity-place="latitude: -6.204202; longitude: 106.820680;"
         ></a-image>
@@ -41,7 +41,7 @@
         AFRAME.registerComponent('scale-with-distance', {
             schema: {
                 camera: { type: 'selector' },
-                baseScale: { type: 'number', default: 10 }
+                baseScale: { type: 'number', default: 100 }
             },
             tick: function () {
                 const object3D = this.el.object3D;
@@ -59,7 +59,7 @@
         // Apply the component to the dynamic object with base scale of 10
         document.querySelector('#dynamic-object').setAttribute('scale-with-distance', {
             camera: '#camera',
-            baseScale: 10
+            baseScale: 100
         });
     </script>
 </body>
